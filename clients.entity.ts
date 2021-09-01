@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, Unique } from "typeorm";
 import { EntityBase } from "./cap-platform-framework/cap-platform-entitybase/entitybase";
 import { TenantsEntity } from "./tenants.entity";
 
-@Entity()
+@Entity('clients')
 @Unique(["Id"])
 export class ClientsEntity extends EntityBase {
  

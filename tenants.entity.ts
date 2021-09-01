@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, Unique } from "typeorm";
 import { EntityBase } from "./cap-platform-framework/cap-platform-entitybase/entitybase";
 import { ClientsEntity } from "./clients.entity";
 import { Tenant_AppsEntity } from "./tenant_apps.entity";
 import { Tenant_UsersEntity } from "./tenant_users.entity";
-@Entity()
+
+@Entity("tenants")
 @Unique(["Id"])
 export class TenantsEntity extends EntityBase {
     
@@ -32,8 +33,8 @@ export class TenantsEntity extends EntityBase {
   @Column ({ name: "status_id", nullable: true })
   status_id?: number;
   
-  //@Column ({ name: "client_id", nullable: true })
-  //client_id?: number;
+  @Column ({ name: "client_id", nullable: true })
+  client_id?: number;
   
   @Column ({ name: "identity_providers_details", nullable: true , type: "json"})
   identity_providers_details?: JSON;
@@ -54,5 +55,6 @@ export class TenantsEntity extends EntityBase {
     () => ClientsEntity,
     (clients) => clients.tenants,
   )
+  @JoinColumn({name: "client_id"})
   clients: ClientsEntity;
 }

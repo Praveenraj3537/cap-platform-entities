@@ -6,7 +6,7 @@ import { App_RolesEntity } from "./app_roles.entity";
 import { FeaturesEntity } from "./features.entity";
 import { Tenant_AppsEntity } from "./tenant_apps.entity";
 
-@Entity()
+@Entity('apps')
 @Unique(["Id"])
 export class AppsEntity extends EntityBase {
     

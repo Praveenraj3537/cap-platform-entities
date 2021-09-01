@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToOne, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, Unique } from "typeorm";
 import { EntityBase } from "./cap-platform-framework/cap-platform-entitybase/entitybase";
 import { Tenant_User_AppsEntity } from "./tenant_user_apps.entity";
 
-@Entity()
+@Entity("tenant_user_app_alerts")
 @Unique(["Id"])
 export class Tenant_User_App_AlertsEntity extends EntityBase {
     
@@ -27,8 +27,8 @@ export class Tenant_User_App_AlertsEntity extends EntityBase {
   @Column ({ name: "has_unsubscribed", nullable: true })
   has_unsubscribed?: boolean;
   
-  // @Column ({ name: "tenant_user_app_id", nullable: true })
-  // tenant_user_app_id?: number;
+  @Column ({ name: "tenant_user_app_id", nullable: true })
+  tenant_user_app_id?: number;
   
   @Column ({ name: "tenant_user_id", nullable: true })
   tenant_user_id?: number;
@@ -39,6 +39,7 @@ export class Tenant_User_App_AlertsEntity extends EntityBase {
     () => Tenant_User_AppsEntity,
     (tenant_user_apps) => tenant_user_apps.tenant_user_app_alerts,
   )
+  @JoinColumn({name: "tenant_user_app_id"})
   tenant_user_apps: Tenant_User_AppsEntity;
 
 }

@@ -4,7 +4,7 @@ import { Feature_PermissionsEntity } from "./feature_permissions.entity";
 import { TenantsEntity } from "./tenants.entity";
 import { Tenant_UsersEntity } from "./tenant_users.entity";
 
-@Entity()
+@Entity("users")
 @Unique(["Id"])
 export class UsersEntity extends EntityBase {
     

@@ -1,20 +1,20 @@
-import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, Unique } from "typeorm";
 import { EntityBase } from "./cap-platform-framework/cap-platform-entitybase/entitybase";
 import { AppsEntity } from "./apps.entity";
 import { TenantsEntity } from "./tenants.entity";
 import { Tenant_App_FeaturesEntity } from "./tenant_app_features.entity";
 import { Tenant_User_AppsEntity } from "./tenant_user_apps.entity";
 
-@Entity()
+@Entity("tenant_apps")
 @Unique(["Id"])
 export class Tenant_AppsEntity extends EntityBase {
   
   
-  // @Column ({ name: "tenant_id", nullable: true })
-  // tenant_id?: number;
+  @Column ({ name: "tenant_id", nullable: true })
+  tenant_id?: number;
   
-  // @Column ({ name: "app_id", nullable: true })
-  // app_id?: number;
+  @Column ({ name: "app_id", nullable: true })
+  app_id?: number;
   
   @Column ({ name: "connection_string", nullable: true })
   connection_string?: string;
@@ -25,11 +25,13 @@ export class Tenant_AppsEntity extends EntityBase {
     (type) => AppsEntity,
     (apps) => apps.tenant_apps,
   )
+  @JoinColumn({name: "app_id"})
   apps: AppsEntity[];
   @ManyToOne(
     () => TenantsEntity,
     (tenants) => tenants.tenant_apps,
   )
+  @JoinColumn({name: "tenant_id"})
   tenants: TenantsEntity;
   @OneToMany(
     (type) => Tenant_App_FeaturesEntity,

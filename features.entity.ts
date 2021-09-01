@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, Unique } from "typeorm";
 import { EntityBase } from "./cap-platform-framework/cap-platform-entitybase/entitybase";
 import { AppsEntity } from "./apps.entity";
 import { Feature_PermissionsEntity } from "./feature_permissions.entity";
 import { Tenant_App_FeaturesEntity } from "./tenant_app_features.entity";
-@Entity()
+
+@Entity("features")
 @Unique(["Id"])
 export class FeaturesEntity extends EntityBase {
     
@@ -13,8 +14,8 @@ export class FeaturesEntity extends EntityBase {
     @Column ({ name: "feature_name", nullable: true })
     feature_name?: string;
  
-    // @Column ({ name: "app_id", nullable: true })
-    // app_id?: number;
+    @Column ({ name: "app_id", nullable: true })
+    app_id?: number;
  
     @Column ({ name: "base_feature_id", nullable: true })
     base_feature_id?: number;
@@ -35,6 +36,7 @@ export class FeaturesEntity extends EntityBase {
       () => AppsEntity,
       (apps) => apps.features,
     )
+    @JoinColumn({name: "app_id"})
     apps: AppsEntity[];
     @OneToMany(
       () => Feature_PermissionsEntity,
